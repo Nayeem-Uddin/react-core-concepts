@@ -1,80 +1,88 @@
 import logo from './logo.svg';
 import './App.css';
+import React, { useState } from 'react';
 
 function App() {
-  const nayoks = ["nayeem nayok","uddin nayok","guddu babu nayok","gullu mitai nayok",'jashim'];
-
-  const products = [
-      {name: 'pen', price: '$1'},
-      {name: 'book', price: '$5'},
-      {name: 'pencil', price: '$1.5'},
-      {name: 'pencil', price: '$1.5'}
-  ]; 
+  const names = ['sadia','kanchi','kobita','nayeem'];
+  
+  const friends = [
+    {name:'bappy',age:24},
+    {name:'farhad',age:25},
+    {name:'sadia',age:23},
+    {name:'ramisa',age:22},
+  ];
 
   return (
     <div className="App">
       <header className="App-header">
         <p>Sadia is a reactful person</p>
+        
+        <Counter></Counter>
+
         <ul>
           {
-            nayoks.map(nayok => <li>{nayok}</li>)
+            names.map(name => <li>{name}</li>)
           }
         </ul>
         {
-          products.map(product => <Product product={product}></Product>)
+          friends.map(friend => <Friend friend={friend}></Friend>)
+        }
+        {
+          names.map(name => <Name name={name}></Name>)
         }
 
-        <Person name={nayoks[0]} nayika="sadia"></Person>
-        <Person name={nayoks[1]} nayika="kobita"></Person>
-        <Person name={nayoks[2]} nayika="kanchi"></Person>
-        <Person name={nayoks[3]} nayika="buri buri"></Person>
       </header>
     </div>
   );
 }
-
-//display the products details
-const productStyle = {
-  height: '250px',
-  width: '250px',
-  backgroundColor: 'lightgrey',
-  borderRadius: '10px',
-  boxShadow: '5px 5px 10px lightsalmon',
-  margin:'10px'
+const friendStyle = {
+  margin:'20px',
+  padding:'20px',
+  borderRadius:'5px',
+  boxShadow:'5px 5px 10px lightsalmon'
 }
-const buttonStyle = {
-  padding:'5px 14px',
-  fontSize:'15px',
-  color:'coffee',
-  backgroundColor:'lightcyan',
-  borderRadius:'7px'
-}
-function Product(props){
-  // console.log(props);
-  const {name,price} = props.product;
+function Friend(props){
+  const {name,age} = props.friend;
   return (
-    <div style={productStyle}>
+    <div style={friendStyle}>
         <h3>{name}</h3>
-        <h1>{price}</h1>  
-        <button style={buttonStyle}>Buy Now</button>
-    </div>
-  )
-}
-
-
-function Person(props) {
-  // console.log(props);
-  return (
-    // <div className="sadia-style">
-    <div style={{ border: '2px solid red', margin: '20px', padding: '20px',width:'300px'}}>
-      <div>
-        <img src="/" alt="" />
-        <h3>{props.name}</h3>
-        <p>Hero of : {props.nayika}</p>
-      </div>
+        <p>{age}</p>
     </div>
   );
 }
 
+//useState or hook
+function Counter(){
+  const [count, setCount] = useState(0);
+
+  const incraseBtn = () =>{
+    const newCount = count + 1;
+    setCount(newCount);
+  }
+
+  const decraseBtn = () =>{
+    const newCount = count - 1;
+    if(newCount>=0){
+      setCount(newCount);
+    }else{
+      alert('You have to select at least one product');
+    }
+  }
+  return (
+    <div>
+        <h3>Count : {count}</h3>
+        <button onClick={incraseBtn}>Increase</button>
+        <button onClick={decraseBtn}>Decrease</button>
+    </div>
+  );
+}
+
+function Name(props){
+  return (
+    <div style={friendStyle}>
+        <h3>{props.name}</h3>
+    </div>
+  );
+}
 
 export default App;
