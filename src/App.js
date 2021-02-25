@@ -1,6 +1,6 @@
 import logo from './logo.svg';
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 function App() {
   const names = ['sadia','kanchi','kobita','nayeem'];
@@ -18,7 +18,7 @@ function App() {
         <p>Sadia is a reactful person</p>
         
         <Counter></Counter>
-
+        <Users></Users>
         <ul>
           {
             names.map(name => <li>{name}</li>)
@@ -41,12 +41,38 @@ const friendStyle = {
   borderRadius:'5px',
   boxShadow:'5px 5px 10px lightsalmon'
 }
+
 function Friend(props){
   const {name,age} = props.friend;
   return (
     <div style={friendStyle}>
         <h3>{name}</h3>
         <p>{age}</p>
+    </div>
+  );
+}
+
+//load data from an API 
+function Users(){
+  const [users, setUser] = useState([]);
+  useEffect(()=>{
+    // console.log('use is effected');
+    fetch('https://jsonplaceholder.typicode.com/users')
+      .then(res => res.json())
+      // .then(data => console.log(data))
+       .then(data => setUser(data))
+  },[])
+  return (
+    <div>
+        <h3>Dynamic users: {users.length}</h3>
+        {
+          console.log(users)
+        }
+        <ul>
+          {
+            users.map(user => <li>{user.name}</li>)
+          }
+        </ul>
     </div>
   );
 }
